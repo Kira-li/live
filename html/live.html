@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>乐股直播</title>	
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="dist/amazeui.min.css" />
+		<script src="dist/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/lrz.bundle.js"></script>
+		<script src="js/sendMes.js"></script>
+		<script src="js/zm-canvas-crop.js"></script>
+		<script src="js/paging.js"></script>
+		<script src="dist/iscroll-zoom.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="dist/hammer.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="dist/photoClip.min.js" type="text/javascript" charset="utf-8"></script>		
+		<script src='js/cutImg.js'></script>
+		<style type="text/css">
+			#clip {
+				width: 200px;
+				height: 200px;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="main">
+			<div id="nav">
+				<div id="navBox">
+					<h2>乐股看盘</h2>
+					<div id="navlogin" class="dropdown">
+						<p class="dropdown-toggle" data-toggle="dropdown" id="no-sign">未登录</p>
+						<button>登录</button>
+						<ul class="dropdown-menu">
+							<li ><a  href="#" id="chang-info">修改个人信息</a></li>
+							<li ><a  href="#" id="chang-pwd">修改密码</a></li>
+							<li ><a  href="admin.html" id="admin">管理后台</a></li>
+							<li ><a  href="#" id="dellogin">注销登录</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="live">
+				<div class="liveLeft">
+					<div class="mes-top">
+						<p class="picLive addboder">图文直播</p>
+						<p class="leguMes">乐股资讯</p>
+					</div>
+					<div class="mesLeft">
+						
+						<ul id="mesLeft">
+							<!--111-->
+							<!--<li>资讯1</li>-->
+							<!--<li><li>-->
+						</ul>
+						<div class="pagelist">
+							<div value="1 0"></div> 
+							<div id="page" class="page_div"></div>
+						</div>
+						
+					</div>
+					<div class="liveCont">
+						<ul  id="liveCont">
+							<!--<li>图文直播</li>-->
+						</ul>
+					</div>
+					<div class="mes-bottom img_hove">
+						<form id="mesLive">
+								<!--<input type="text" placeholder="期待你的观点" id="onText" name="content">-->
+								<textarea id="onText"></textarea>
+								<s><input type="file" id="onPic" title="上传图片" accept='image/*'><div class="show_img"></div></s>
+								<input type="text" class="live_img_url" name="img_url" hidden="hidden" value="" />
+								<input id="sendLive" value="发送" type="button">
+						</form>	
+					</div>
+				</div>
+				<div class="liveRight">
+						<div class="show_img"></div>
+						<div class="leguPro">
+							<h4>乐股简介</h4>
+							<p>我们选股经过模型数据分析，在交易数据模型上进行买卖，在持股模型数据上确认离场.不批发个股，宁缺毋滥，一个个做，只相信买入机会，卖出风险。剩下的交给股市和概率。</p>
+						</div>
+					<div>
+						<h4 id="liveSol">乐股互动解答</h4>
+						<div class="mesRight">
+							<ul id="mesRight">
+							<!--<div><div>-->
+							</ul>
+						</div>
+						
+						<div id="sendMes" class="img_hove">
+							<form id="textPic">
+								<!--<input type="text" placeholder="期待你的观点" id="inText" name="content">-->
+								<textarea id="inText"></textarea>
+								<s><input type="file" id="inPic" title="上传图片" accept='image/*'><div class="show_img"></div></s>
+								<input type="text" class="answer_img_url" hidden="hidden" value="" />
+								<input id="sendmes" value="发送" type="button">
+								
+							</form>
+							<div id="noclick"></div>	
+						</div>
+					</div>
+				</div>
+			</div>   
+			<div class="footer">
+				<ul>
+					<li class="footerabout">关于我们</li>
+					<li class="footeradr">公司地址：浙江省杭州市滨江区香溢大厦9楼 </li>
+					<li class="footertel">热线电话：0571-86039517</li>
+					<li class="footereml">邮<span></span>箱：legu360@.com</li>
+					<li class="footercom">Copyright@2017  杭州翻腾网络科技有限公司  浙ICP备17012841号-1版权所有</li>
+				</ul>
+				<div class="erweima">
+					<img src="img/erweima.png">
+					<p>扫码下载乐股360APP</p>
+				</div>
+			</div>
+			<div class="lightBox">
+				<img src="img/cha.png" class="del">
+				<div class="login">
+					<p>注册乐股360</p>
+					<form name="login" method="post" action="" id="login">
+					<ul>
+						<li><input type="text" placeholder="请输入昵称" id="nickname" name='nickname'></li>
+						<li><input type="text" placeholder="请输入手机号码" id="tel" name='phone'></li>
+						<li class="second"><input type="text" placeholder="请输入手机验证码" id="telCode" name="sms"><input value="验证码" id="code"></li>
+						<li><input type="password" placeholder="请输入密码" id="pwd" name="pwd"></li>
+						<li><input type="password" placeholder="请确定密码" id="repwd" name="repwd"></li>
+						<li id="meserror"></li>
+						<li class="fifth"><input value="立即注册" id="loginBtn" type="button"></li>
+						<li class="sixth">已有账号？立即登录</li>
+					</ul>
+					</form>
+				</div>
+				<div class="sign">
+					<p>登录乐股360</p>
+					<form name="sign" method="post" action="" id="sign">
+					<ul>
+						<li><input type="text" placeholder="请输入手机号码" id="username" name='user_info'></li>
+						<li><input type="password"placeholder="请输入密码" id="userpwd" name='pwd'></li>
+						<li id="signmeserror"></li>
+						<li class="signPwd">
+							<p class="signleft">快速注册</p>
+							<p class="signright">忘记密码?</p>
+						</li>
+						<li><input type="button" id="signBtn" value="登录"></li>
+					</ul>
+					</form>
+				</div>
+				<ul id="per-info">
+					<form id="form1" name="formx" method="post" action="" enctype="multipart/form-data">
+					 <p><label>昵 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</label><input type="text" id="fix_nickname"></p>
+					 <div>
+						<label for="user_avatar">用户头像:</label>
+						<img name="user_avatar"  id="fix_avatar" class="user_avatar" src="http://oss.legu360.com/live/avatar/2017-10-23/lt0Vx9pIbx.jpeg" alt="">
+						<div style="margin-top:20px;"><label>修改头像:&nbsp;&nbsp;</label><span>上传头像<input class="upload_avatar" type="file"></span></div>
+					</div>
+			
+					<div id="cut" style="display: none">
+						<div id="clip">
+						</div>
+						<div>
+							<label>重新上传：</label>
+							<span>重新上传头像<input type="file" class="upload_avatar"></span>
+							<!--<input type="file" class="upload_avatar" style="width: 80px;display: inline-block;">-->
+							<button type="button"  id="clipBtn" style="display: inline-block;">确认裁剪</button>
+						</div>
+						<!--<input type="file" class="upload_avatar">
+						<button type="button"  id="clipBtn">确认裁剪</button>-->
+					</div>
+					 <p><input type="button" value="提交" id="sub_userinfo"></p>
+					</form>
+				</ul>
+				<ul id="per-pwd">
+					<li>原密码：<input type="text" name="pwd" id="chang_formal_pwd"></li>
+					<li>新密码：<input type="text" name="newpwd" id="chang_new_pwd"></li>
+					<li>再输入新密码：<input type="text" name="repwd" id="chang_new_repwd"></li>
+					<li><input type="button" value="提交"id="chang_pwd"></li>
+					<li id="chang_messucces"></li>
+				</ul>
+				<div id="imgScale"></div>
+				<div id="zixunload"></div>
+				<div id="errReport"><img src="img/cha.png"><p></p></div>
+				<ul id="forgetPwd">
+					<li><input type="text" placeholder="请输入昵称或手机号" id="forget_nickname" name='user_info'></li>
+					<li class="second"><input type="text" placeholder="请输入手机验证码" id="forget_telCode" name="sms"><input value="获取验证码" id="forget_code" type="button"></li>
+					<li><input type="password" placeholder="请输入新密码" id="forget_pwd" name="pwd"></li>
+					<li><input type="password" placeholder="请再输入一遍" id="forget_repwd" name="repwd"></li>
+					<li class="fifth"><input value="提交" id="forgetBtn" type="button"></li>
+				</ul>
+			</div>
+		</div>
+	</body>
+
+</html>

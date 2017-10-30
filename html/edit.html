@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>后台管理 </title>
+		<meta name="description" content="Restyling jQuery UI Widgets and Elements" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="assets/css/ace-fonts.css" />
+		<link rel="stylesheet" href="assets/css/ace.min.css" id="main-ace-style" />
+		<script src="assets/js/ace-extra.min.js"></script>
+		<script src=''></script>
+		<style>
+			.submenu li {
+				list-style: none;
+				margin: 20px 0;
+				font-size: 20px;
+			}
+			.lightModel{
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				background: rgba(0,0,0,0.5);
+				z-index: 10;
+				display: none;
+			}
+			.outerbox {
+				width: 800px;
+				margin: 0 auto;
+				position: absolute;
+				top: 200px;
+				left: 200px;		
+				z-index: 20;
+				background: #fff;
+				height: 600px;
+				
+			}
+			.dic {
+				width: 800px;
+				max-height: 500px;
+				overflow-y: scroll;
+			}
+			/*.contbox{
+				width: 600px;
+				
+			}*/
+			.qd,.qx {
+				position: absolute;
+				margin-right: 30px;
+				text-align: center;
+				width: 50px;
+				height: 30px;
+				line-height: 30px;
+				background: #248ad2;
+				top:500px;
+				color: #000;
+				text-align: center;
+				
+			}
+			.qd {
+				left:320px;
+			}
+			.qx {
+				left: 380px;
+			}
+		#errReport {
+			position: absolute;
+			top:50px;
+			left: 50%;
+			z-index: 100;
+			display: none;
+			/*width: 100%;*/
+			margin-left: -180px;
+			min-width: 300px;
+			background: #dff0d8;
+			border: 1px solid transparent;
+		    border-radius: 4px;
+		/*    margin: 0;*/
+		}
+		#errReport p {
+			margin: 0;
+			padding: 10px 20px;
+			color: red;
+			/*background: #475561;*/
+		}
+		#errReport img{
+			position: absolute;
+			right: 0;
+			top:0;
+			width: 20px;
+		}
+		</style>
+		<!--[if lte IE 8]>
+		<script src="assets/js/html5shiv.min.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="no-skin">
+		<!-- #section:basics/navbar.layout -->
+		<div id="navbar" class="navbar navbar-default">
+
+			<div class="navbar-container" id="navbar-container">
+				
+
+			</div><!-- /.navbar-container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<!-- #section:basics/sidebar -->
+			<div id="sidebar" class="sidebar responsive">
+				<ul class="submenu">
+					<li class="active">
+						<a href="live.html">
+							<i class="menu-icon fa fa-caret-right"></i>
+							首页
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="active">
+						<a href="admin.html">
+							<i class="menu-icon fa fa-caret-right"></i>
+							后台管理
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="active">
+						<a href="textEditing.html">
+							<i class="menu-icon fa fa-caret-right"></i>
+							编辑器
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="active">
+						<a href="userInfo.html">
+							<i class="menu-icon fa fa-caret-right"></i>
+							用户信息
+						</a>
+						<b class="arrow"></b>
+					</li>					
+				</ul>
+			</div>
+
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+
+				<div class="page-content">
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<h4 class="header green clearfix" style="height: 50px;">
+									文本编辑器
+									<span class="block pull-right">
+										<small class="grey middle">选择编辑器风格: &nbsp;</small>
+											
+										<span class="btn-toolbar inline middle no-margin">
+											<span data-toggle="buttons" class="btn-group no-margin">
+												<label class="btn btn-sm btn-yellow">
+													1
+													<input type="radio" value="1" />
+												</label>
+
+												<label class="btn btn-sm btn-yellow active">
+													2
+													<input type="radio" value="2" />
+												</label>
+
+												<label class="btn btn-sm btn-yellow">
+													3
+													<input type="radio" value="3" />
+												</label>
+
+												<label class="btn btn-sm btn-yellow">
+													4
+													<input type="radio" value="4" />
+												</label>
+											</span>
+										</span>
+									</span>
+									
+								</h4>
+								<div style="margin: 20px auto;width:500px"><span>请输入文章标题：</span><input type="text" style="width: 200px;margin: 0 auto;" id="title" name="content"></div>
+								<div style="margin: 20px auto;width:500px"><span>请输入文章摘要：</span><textarea id="desc" style="width: 300px;height: 100px;"></textarea></div>
+								<div style="margin: 20px auto;width:500px">
+										<form action="" >
+											是否为激活状态:
+											<label><input name="jihuo" type="radio" value="yes" >是</label>
+											<label><input name="jihuo" type="radio" value="no" />否 </label>
+										</form>
+								</div>
+								<div style="margin: 20px auto;width:500px">权重：<input type="text" id="weight"></div>
+								<div class="wysiwyg-editor" id="editor1"></div>
+								<div class="widget-toolbox padding-4 clearfix">
+									<div class="btn-group pull-left">
+										<button class="btn btn-sm btn-info">
+											<i class="ace-icon fa fa-times bigger-125"></i>
+											取消
+										</button>
+									</div>
+
+									<div class="btn-group pull-right">
+										<button class="btn btn-sm btn-info" id="btn-sm">
+											<i class="ace-icon fa fa-floppy-o bigger-125"></i>
+											保存编辑器内容
+										</button>
+									</div>
+								</div>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+		</div><!-- /.main-container -->
+
+		</div>
+		<div class="lightModel">
+			<div class="outerbox">
+				<div class="dic">
+					<div class="contBigbox">
+						<div class="contbox"></div>
+					</div>
+				</div>
+				<a  href="admin.html" class="qd">确定</a>
+				<a  href="##" class="qx">取消</a>
+			</div>
+			
+			
+		</div>
+		<div id="errReport"><img src="img/cha.png"><p></p></div>
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+		<script type="text/javascript">
+		 window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>"+"<"+"/script>");
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+		<script src="assets/js/jquery-ui.custom.min.js"></script>
+		<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="assets/js/jquery.hotkeys.min.js"></script>
+		<script src="assets/js/bootstrap-wysiwyg.min.js"></script>
+		<script src="assets/js/bootbox.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="assets/js/ace-elements.min.js"></script>
+		<script src="assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($){
+	
+			function showErrorAlert (reason, detail) {
+				var msg='';
+				if (reason==='unsupported-file-type') { msg = "Unsupported format " +detail; }
+				else {
+					//console.log("error uploading file", reason, detail);
+				}
+				$('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
+				 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
+			}
+
+	//$('#editor1').ace_wysiwyg();//this will create the default editor will all buttons
+
+	//but we want to change a few buttons colors for the third style
+		$('#editor1').ace_wysiwyg({
+			toolbar:
+			[
+				'font',
+				null,
+				'fontSize',
+				null,
+				{name:'bold', className:'btn-info'},
+				{name:'italic', className:'btn-info'},
+				{name:'strikethrough', className:'btn-info'},
+				{name:'underline', className:'btn-info'},
+				null,
+				{name:'insertunorderedlist', className:'btn-success'},
+				{name:'insertorderedlist', className:'btn-success'},
+				{name:'outdent', className:'btn-purple'},
+				{name:'indent', className:'btn-purple'},
+				null,
+				{name:'justifyleft', className:'btn-primary'},
+				{name:'justifycenter', className:'btn-primary'},
+				{name:'justifyright', className:'btn-primary'},
+				{name:'justifyfull', className:'btn-inverse'},
+				null,
+				{name:'createLink', className:'btn-pink'},
+				{name:'unlink', className:'btn-pink'},
+				null,
+				{name:'insertImage', className:'btn-success'},
+				null,
+				'foreColor',
+				null,
+				{name:'undo', className:'btn-grey'},
+				{name:'redo', className:'btn-grey'}
+			],
+			'wysiwyg': {
+				fileUploadError: showErrorAlert
+			}
+		}).prev().addClass('wysiwyg-style2');
+
+
+		$('[data-toggle="buttons"] .btn').on('click', function(e){
+			var target = $(this).find('input[type=radio]');
+			var which = parseInt(target.val());
+			var toolbar = $('#editor1').prev().get(0);
+			if(which >= 1 && which <= 4) {
+				toolbar.className = toolbar.className.replace(/wysiwyg\-style(1|2)/g , '');
+				if(which == 1) $(toolbar).addClass('wysiwyg-style1');
+				else if(which == 2) $(toolbar).addClass('wysiwyg-style2');
+				if(which == 4) {
+					$(toolbar).find('.btn-group > .btn').addClass('btn-white btn-round');
+				} else $(toolbar).find('.btn-group > .btn-white').removeClass('btn-white btn-round');
+			}
+		});
+	
+	
+		if ( typeof jQuery.ui !== 'undefined' && ace.vars['webkit'] ) {
+			
+			var lastResizableImg = null;
+			function destroyResizable() {
+				if(lastResizableImg == null) return;
+				lastResizableImg.resizable( "destroy" );
+				lastResizableImg.removeData('resizable');
+				lastResizableImg = null;
+			}
+	
+			var enableImageResize = function() {
+				$('.wysiwyg-editor')
+				.on('mousedown', function(e) {
+					var target = $(e.target);
+					if( e.target instanceof HTMLImageElement ) {
+						if( !target.data('resizable') ) {
+							target.resizable({
+								aspectRatio: e.target.width / e.target.height,
+							});
+							target.data('resizable', true);
+							
+							if( lastResizableImg != null ) {
+								//disable previous resizable image
+								lastResizableImg.resizable( "destroy" );
+								lastResizableImg.removeData('resizable');
+							}
+							lastResizableImg = target;
+						}
+					}
+				})
+				.on('click', function(e) {
+					if( lastResizableImg != null && !(e.target instanceof HTMLImageElement) ) {
+						destroyResizable();
+					}
+				})
+				.on('keydown', function() {
+					destroyResizable();
+				});
+		    }
+	
+			enableImageResize();
+			
+	
+		}
+	
+		function getQueryString(name) {
+	        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+	        var r = window.location.search.substr(1).match(reg);
+	        if (r != null) {
+	            return unescape(r[2]);
+	        }
+	        return null;
+    };
+    var infoId=getQueryString("info_id");
+    var token = localStorage.getItem('legu_token');
+		var userId = localStorage.getItem('legu_user_id');
+		console.log(infoId);
+		console.log(token);
+		console.log(userId);
+    $.ajax({
+				type:"get",
+				url:"http://live.legu360.com/api/hotinfo/getinfoall",
+				data:{info_id:infoId,user_id:userId,token:token},
+				dataType:"json",
+				success:function (data){
+					console.log(data.data);
+					if (data.err_code != 0) {
+						$("#errReport p").html(data.err_msg);
+						$("#errReport").css("display","block");
+					}
+					$("#title").val(data.data.title);
+					$("#desc").val(data.data.desc);
+					var state;
+					if(data.data.isvalid==1){
+						state="yes"
+					}else{
+						state="no"
+					}
+					$("input[name='jihuo'][value="+state+"]").attr("checked",true);
+					$("#weight").val(data.data.weight);
+					$("#editor1").html(data.data.content);
+				}
+			});
+		$("#btn-sm").click(function(){
+			$(".lightModel").css("display","block");
+			var title=$("#title").val();
+			var desc=$("#desc").val();
+			var content=$("#editor1").html();
+			$(".contbox").html("<h4 style='text-align:center'>"+title+"</h4><div style='text-indent:20px'>"+content+"</div>");
+		});
+		$(".qd").click(function(){
+			$(".lightModel").css("display","none");
+			var token = localStorage.getItem('legu_token');
+			var userId = localStorage.getItem('legu_user_id');
+			var title  =$("#title").val();
+			var desc=$("#desc").val();
+			var content =$("#editor1").html();
+			var weight=$("#weight").val();
+			var isvalid;
+			if($("input[name='jihuo'][value='yes']").attr("checked")=="checked"){
+				isvalid=1;
+			}else{
+				isvalid=0;
+			}
+			console.log(isvalid)
+			console.log(desc);
+			$.ajax({
+				type:"post",
+				url:"http://live.legu360.com/api/hotinfo/edit",
+				data:{content:content,title:title,user_id:userId,token:token,desc:desc,isvalid:isvalid,info_id:infoId,weight:weight},
+				dataType:"json",
+				success:function (data){
+					if (data.err_code != 0) {
+						$("#errReport p").html(data.err_msg);
+						$("#errReport").css("display","block");
+						return false;
+					}
+				}
+			});
+		});
+		$(".qx").click(function(){
+			$(".lightModel").css("display","none");
+			$(".contbox").html("");
+		});
+		
+		
+		$("#errReport img").click(function(){
+			$("#errReport").css("display","none");
+			$("#errReport p").html("");
+		})
+		
+	});
+	
+	</script>
+
+	</body>
+</html>

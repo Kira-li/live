@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title></title>
+	<style type="text/css">
+		textarea {
+			width: 200px;
+			height: 100px;
+			margin-top: 100px;
+		}
+		#big {
+			position: relative;
+			width: 1000px;
+			height: 1000px;
+		}
+		#small{
+			position: absolute;
+			width: 500px;
+			height: 500px;
+			top: 50%;
+			left: 50%;
+			margin-left: -250px;
+			margin-top: -250px;
+			overflow: hidden;
+			background: #000000;
+			margin: auto;
+		}
+		img {
+			/*display: block;*/
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: -140px;
+			margin-top: -140px;
+		}
+	</style>
+	<script type="text/javascript" src="assets/js/jquery.min.js" ></script>
+</head>
+<body>
+<div id="big">
+	<div id="small"><img src="img/erweima.png" /></div>
+	
+</div>
+<textarea id="test"></textarea>
+<script type="text/javascript">
+//	 var test= document.getElementById("test");  
+//	 test.onkeydown = function(e){  
+//	    send(e);  
+//	 }  
+//	    function send(e){  
+//	    var code;  
+//	    if (!e) var  e = window.event;  
+//	    if (e.keyCode) code = e.keyCode;  
+//	    else if (e.which) code = e.which;  
+//	    if(code==13 && window.event){  
+//	        e.returnValue = false;  
+//	    }else if(code==13){  
+//	        e.preventDefault();  
+//	        $("img").css("transform": "scale(2)");
+//	    }  
+//	  
+//	}  
+	$("div").click(function(){
+		$("img").css({"transform": "scale(3)"});
+	})
+</script>
+</body>
+</html>  
+

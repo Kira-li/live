@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>乐股直播</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="assets/css/jquery-ui.custom.min.css" />
+	<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="assets/css/ace-fonts.css" />
+	<link rel="stylesheet" href="assets/css/ace.min.css" id="main-ace-style" />
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+			.submenu li {
+				list-style: none;
+				margin: 0 0 20px 0;
+				font-size: 20px;
+			}
+			.header {
+				border-bottom: none;
+			}
+			#lightBox{
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				background: rgba(0,0,0,0.5);
+				z-index: 10;
+				display: none;
+			}
+			td {
+				max-width: 600px;
+			}
+			#tpl{
+				position:absolute;
+				top:100px;
+				left:200px;
+				margin-left: 100px;
+				z-index: 20;
+				background:#fff;
+				max-height: 800px;
+				max-width: 800px;
+				overflow-y: scroll;
+			}
+			#page {
+				overflow: hidden;
+			}
+			#page div,#page p {
+				float: right;
+				/*height: 20px;*/
+				/*width: 40px;*/
+				margin-left: 30px;
+				text-align: center;
+				height: 30px;
+				text-align: center;
+				line-height: 30px;
+			}
+			#page span {
+				display: inline-block;
+				margin-left: 20px;
+				width: 30px;
+				height: 30px;
+				text-align: center;
+				line-height: 30px;
+				background: #006DCC;
+			}
+		#errReport {
+			position: absolute;
+			top:50px;
+			left: 50%;
+			z-index: 100;
+			display: none;
+			/*width: 100%;*/
+			margin-left: -180px;
+			min-width: 300px;
+			background: #dff0d8;
+			border: 1px solid transparent;
+		    border-radius: 4px;
+		/*    margin: 0;*/
+		}
+		#errReport p {
+			margin: 0;
+			padding: 10px 20px;
+			color: red;
+			/*background: #475561;*/
+		}
+		#errReport img{
+			position: absolute;
+			right: 0;
+			top:0;
+			width: 20px;
+		}
+    </style>
+</head>
+<body>
+	<div id="navbar" class="navbar navbar-default">
+
+			<div class="navbar-container" id="navbar-container">
+				
+
+			</div><!-- /.navbar-container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<!-- #section:basics/sidebar -->
+			<div id="sidebar" class="sidebar responsive">
+				<ul class="submenu">
+					<li class="active">
+						<a href="live.html">
+							<i class="menu-icon fa fa-caret-right"></i>
+							首页
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="active">
+						<a href="admin.html">
+							<i class="menu-icon fa fa-caret-right"></i>
+							后台管理
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="active">
+						<a href="textEditing.html">
+							<i class="menu-icon fa fa-caret-right"></i>
+							编辑器
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="active">
+						<a href="userInfo.html">
+							<i class="menu-icon fa fa-caret-right"></i>
+							用户信息
+						</a>
+						<b class="arrow"></b>
+					</li>
+				</ul>
+			</div>
+
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+
+				<div class="page-content">
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+						<div class="container">
+							<h4 class="header green clearfix" style="height: 40px;">后台管理</h4>
+					    <table id="example" class="table table-striped table-bordered">
+					        <thead>
+					        <tr>
+					            <th>文章标题</th>
+					            <th>摘要</th>
+					            <th>查看内容</th>
+					            <th>操作</th>
+					        </tr>
+					        
+					        </thead>
+					        <tbody class='info'>
+					        </tbody>
+					        <!-- tbody是必须的 -->
+					    </table>
+					    <div id='page'><p></p><div></div></div>
+					</div>
+					<div id="lightBox"><div id="tpl"></div><div>
+						
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+		</div><!-- /.main-container -->
+
+	</div>
+	<div id="errReport"><img src="img/cha.png"><p></p></div>
+</body>
+	
+</html>
+
+<script>
+$(function(){
+	var token = localStorage.getItem('legu_token');
+	var userId = localStorage.getItem('legu_user_id');
+	var init = function () {
+		getInfoAll();
+	}
+	
+	var  getInfoAll = function (page = 1, count = 10){
+		params = {
+			'user_id': userId,
+			'token':token,
+			'page':page,
+			'count':count
+		}
+		$.ajax({
+			type:"get",
+			url:"http://live.legu360.com/api/hotinfo/getinfolistall",
+			data:params,
+	        dataType:'json',
+	        success:function(data){
+	        	console.log(data.data)
+	        	if (data.err_code != 0) {
+					$("#errReport p").html(data.err_msg);
+					$("#errReport").css("display","block");
+	        	}
+	        	var currentPage = data.data.current_page;
+	        	var allPage = data.data.all_page;
+	        	if (data.data.info.length >0) {
+	        		var str = '';
+	        		var templet = '';
+	        		$.each(data.data.info,function(i,v) {
+	        			str += "<tr info_id='"+v.id+"' data_mes='"+v+"'>";
+	        			str += "<td class = 'title'>"+v.title+"</td>";
+	        			str += "<td class = 'desc'>"+v.desc+"</td>";
+	        			str += "<td>"+'<a href="###" class="look">查看</a>'+"</td>";
+//	        			templet += "<div class='templete_"+v.id+"' style='display: none;'>"+v.content+"</div>";
+	        			str += "<td class = 'option'><a href='edit.html?info_id="+v.id+"' class='edit'>编辑&nbsp;&nbsp;&nbsp;&nbsp;</a>"+'<a href="###" class="delete">删除</a>'+"</td>";
+	        			str += "</tr>";
+	        		})
+	        		$(".info").html(str);
+//	        		$('#tpl').html(templet);
+					var pageContent= "<p>共&nbsp;&nbsp;<b>"+allPage+"</b>&nbsp;&nbsp;页</p>";
+					var pages=''
+				    for(var i=1;i<=allPage;i++){
+				    	pages+="<span>"+i+"</span>"
+				    }
+//				    pageContent+="<b>共"+allPage+"页</b>";
+					$("#page div").html(pages);
+				    $("#page p").html(pageContent);
+	        	}
+	        }
+		});
+	}
+	
+	var renderPage = function() {
+		
+	}
+	
+	var delInfo = function () {
+		
+	}
+	
+	var editInfo = function () {_
+		
+	}
+	
+	init();
+	$('.info').on('click', '.look', function(e){
+		var self = this;
+		var optId = $(self).closest('tr').attr('info_id');
+		console.log(optId)
+		var params = {
+			'info_id':optId,
+			'user_id':userId,
+			'token':token,
+		}
+		$.ajax({
+			type:"get",
+			url:"http://live.legu360.com/api/hotinfo/getinfoall",
+			data:params,
+			success:function(data){
+				if (data.err_code != 0) {
+					$("#errReport p").html(data.err_msg);
+					$("#errReport").css("display","block");
+				}
+				$('#lightBox').css('display','block');
+				var str="<div style='margin:0 auto;display:table'><h3>"+JSON.parse(data).data.title+"</h3></div><p>"+JSON.parse(data).data.content+"</p>"
+				
+				$('#tpl').html(str)
+				$('#tpl').click(function(){
+					$('#lightBox').css('display','none');
+				});
+			}
+		});
+			
+		console.log('.templete_'+optId)
+	})
+	
+	$('.info').on('click', '.delete', function(e){
+		var self = this;
+		var token = localStorage.getItem('legu_token');
+		var userId = localStorage.getItem('legu_user_id');
+		var optId = $(self).closest('tr').attr('info_id');
+		var params = {
+			'user_id':userId,
+			'token':token,
+			'info_id':optId
+		}
+		$.ajax({
+			type:"post",
+			url:"http://live.legu360.com/api/hotinfo/delete",
+			dataType:'json',
+			data:params,
+			success : function(data){
+				if (data.err_code != 0) {
+					$("#errReport p").html(data.err_msg);
+					$("#errReport").css("display","block");
+				}
+				window.location.reload();
+			}
+		});
+	})
+	$('#page').on('click', 'span', function(e){
+		var self = this;
+		var token = localStorage.getItem('legu_token');
+		var userId = localStorage.getItem('legu_user_id');
+		var page=$(self).html();
+		var count=10;
+		getInfoAll (page,count=10)
+
+	});
+	$("#errReport img").click(function(){
+		$("#errReport").css("display","none");
+		$("#errReport p").html("");
+	})
+})
+</script>
